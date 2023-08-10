@@ -1,0 +1,12 @@
+{
+  "records": [
+    {
+      "id": 1,
+      "title": "Born in the U.S.A.",
+      "artist": "Bruce Springsteen",
+      "releaseYear": 1984,
+      "img": "https://vinyl.bertelsmann.com/de/records/view/L133",
+      "price": 19.99
+    }
+  ]
+}
