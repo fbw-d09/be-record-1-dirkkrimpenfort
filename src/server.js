@@ -39,7 +39,8 @@ app.use('/api/records', recordsRouter);
 const usersRouter = require('./routes/usersRouter');
 app.use('/api/users', usersRouter);
 
-
+const ordersRouter = require('./routes/ordersRouter');
+app.use('/api/orders', ordersRouter);
 
 //Ende Routing
 

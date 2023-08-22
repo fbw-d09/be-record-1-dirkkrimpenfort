@@ -1,0 +1,22 @@
+{
+  "orders": [
+    {
+      "id": 101,
+      "kunden_id": 1,
+      "record_id": 24,
+      "menge": 2
+    },
+    {
+      "id": 102,
+      "kunden_id": 2,
+      "record_id": 124,
+      "menge": 1
+    },
+    {
+      "id": 103,
+      "kunden_id": 1,
+      "record_id": 124,
+      "menge": 3
+    }
+  ]
+}
