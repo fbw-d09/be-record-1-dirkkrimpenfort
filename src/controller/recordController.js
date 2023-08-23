@@ -3,6 +3,18 @@ const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('../src/db.json'); 
 const db = low(adapter);
 
+exports.createRecord = (req,res) => {
+    const newRecord = req.body;
+    db.get('records').push(newRecord).write();
+    res.status(201).send("Record added");
+};
+
+exports.getRecords = (req,res) => {
+    const records = db.get('records').value(); // Fügen Sie diese Zeile hinzu
+    res.status(200).json(records);
+    console.log('Alle Records sind angezeigt');
+};
+
 exports.getRecordById = (req, res) => {
     const recordID = parseInt(req.params.id, 10); 
     const record = db.get('records').find({ id: recordID }).value(); 

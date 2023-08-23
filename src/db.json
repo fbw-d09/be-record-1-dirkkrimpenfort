@@ -47,6 +47,14 @@
       "releaseYear": 1976,
       "img": "https://example.com/hotelcalifornia.jpg",
       "price": 84.99
+    },
+    {
+      "id": 250,
+      "title": "Blood on the Tracks",
+      "artist": "Bob Dylan",
+      "releaseYear": 1975,
+      "img": "https://link-to-vinyl-image.com/image250",
+      "price": 49.99
     }
   ]
 }
