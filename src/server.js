@@ -9,6 +9,8 @@ app.use (express.json());
 //wird nur bei älteren Versionen von Express benötigt
 //const bodyParser = require('body-parser');
 //app.use(bodyParser.urlencoded({ extended: true }));
+const { connect, closeConnection } = require('./configs/db.js');
+connect();
 
 
 //Aufgabe 02-Middleware

@@ -1,50 +1,63 @@
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('../src/dbUser.json'); 
-const dbUser = low(adapter);
+const User = require('../models/User');
 
-exports.createUser = (req,res) => {
+exports.getUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).send("Error fetching users");
+    }
+};
+
+exports.createUser = async (req, res) => {
     const newUser = req.body;
-    dbUser.get('users').push(newUser).write();  
-    console.log(newUser)
-    res.status(201).json(newUser);
-    console.log('neuer Nutzer wurde erstellt', dbUser.get('users').value())  
-};
-
-exports.getUsers = (req,res) => {
-    res.status(200).json(users);
-    console.log('Alle Nutzer sind angezeigt')
-};
-
-exports.getUserById = (req, res) => {
-    const userID = parseInt(req.params.id, 10); 
-    const user = dbUser.get('users').find({ id: userID }).value(); 
-    if (!user) {
-        res.status(404).send("User not found");
-    } else {
-        res.status(200).json(user);
+    try {
+        const user = await User.create(newUser);
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(500).send("Error creating user");
     }
 };
 
-exports.updateUserById = (req, res) => {
-    const userID = parseInt(req.params.id, 10);  
-    const updateUserData = req.body;
-    const user = dbUser.get('users').find({ id: userID }).value(); 
-    if (!user) {
-        return res.status(404).send("User not found");
+exports.getUserById = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).send("User not found");
+        } else {
+            res.status(200).json(user);
+        }
+    } catch (error) {
+        res.status(500).send("Error fetching user");
     }
-    dbUser.get('users').find({ id: userID }).assign(updateUserData).write();
-    res.send(dbUser.get('users').find({ id: userID }).value());
 };
 
-exports.deleteUserById = (req, res) => {
-    const userID = parseInt(req.params.id, 10);  
-    const user = dbUser.get('users').find({ id: userID }).value(); 
-    if (!user) {
-        return res.status(404).send("User not found");
+exports.updateUserById = async (req, res) => {
+    const userId = req.params.id;
+    const updatedUser = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(userId, updatedUser, { new: true });
+        if (!user) {
+            res.status(404).send("User not found");
+        } else {
+            res.status(200).json(user);
+        }
+    } catch (error) {
+        res.status(500).send("Error updating user");
     }
-    dbUser.get('users').remove({ id: userID }).write();
-
-    res.status(200).send('User deleted');
 };
 
+exports.deleteUserById = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const result = await User.findByIdAndDelete(userId);
+        if (!result) {
+            res.status(404).send("User not found");
+        } else {
+            res.status(200).send("User deleted");
+        }
+    } catch (error) {
+        res.status(500).send("Error deleting user");
+    }
+};

@@ -1,52 +1,63 @@
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('../src/dbOrder.json'); 
-const dbOrder = low(adapter);
+const Order = require('../models/Order');
 
-exports.createOrder = (req,res) => {
+exports.getOrders = async (req, res) => {
+    try {
+        const orders = await Order.find();
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).send("Error fetching orders");
+    }
+};
+
+exports.createOrder = async (req, res) => {
     const newOrder = req.body;
-    dbOrder.get('orders').push(newOrder).write();  
-    console.log(newOrder)
-    res.status(201).json(newOrder);
-    console.log('neue Bestellung wurde erstellt', dbOrder.get('orders').value())  
-};
-
-exports.getOrders = (req,res) => {
-    const orders = dbOrder.get('orders').value(); // Fügen Sie diese Zeile hinzu
-    res.status(200).json(orders);
-    console.log('Alle Bestellungen sind angezeigt');
-};
-
-
-exports.getOrderById = (req, res) => {
-    const orderID = parseInt(req.params.id, 10); 
-    const order = dbOrder.get('orders').find({ id: orderID }).value(); 
-    if (!order) {
-        res.status(404).send("Order not found");
-    } else {
-        res.status(200).json(order);
+    try {
+        const order = await Order.create(newOrder);
+        res.status(201).json(order);
+    } catch (error) {
+        res.status(500).send("Error creating order");
     }
 };
 
-exports.updateOrderById = (req, res) => {
-    const orderID = parseInt(req.params.id, 10);  
-    const updateOrderData = req.body;
-    const order = dbOrder.get('orders').find({ id: orderID }).value(); 
-    if (!order) {
-        return res.status(404).send("Order not found");
+exports.getOrderById = async (req, res) => {
+    const orderId = req.params.id;
+    try {
+        const order = await Order.findById(orderId);
+        if (!order) {
+            res.status(404).send("Order not found");
+        } else {
+            res.status(200).json(order);
+        }
+    } catch (error) {
+        res.status(500).send("Error fetching order");
     }
-    dbOrder.get('orders').find({ id: orderID }).assign(updateOrderData).write();
-    res.send(dbOrder.get('orders').find({ id: orderID }).value());
 };
 
-exports.deleteOrderById = (req, res) => {
-    const orderID = parseInt(req.params.id, 10);  
-    const order = dbOrder.get('orders').find({ id: orderID }).value(); 
-    if (!order) {
-        return res.status(404).send("Order not found");
+exports.updateOrderById = async (req, res) => {
+    const orderId = req.params.id;
+    const updatedOrder = req.body;
+    try {
+        const order = await Order.findByIdAndUpdate(orderId, updatedOrder, { new: true });
+        if (!order) {
+            res.status(404).send("Order not found");
+        } else {
+            res.status(200).json(order);
+        }
+    } catch (error) {
+        res.status(500).send("Error updating order");
     }
-    dbOrder.get('orders').remove({ id: orderID }).write();
-
-    res.status(200).send('Order deleted');
 };
 
+exports.deleteOrderById = async (req, res) => {
+    const orderId = req.params.id;
+    try {
+        const result = await Order.findByIdAndDelete(orderId);
+        if (!result) {
+            res.status(404).send("Order not found");
+        } else {
+            res.status(200).send("Order deleted");
+        }
+    } catch (error) {
+        res.status(500).send("Error deleting order");
+    }
+};
