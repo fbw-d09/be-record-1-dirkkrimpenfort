@@ -1,0 +1,60 @@
+{
+  "records": [
+    {
+      "id": 124,
+      "title": "Born in the U.S.A.",
+      "artist": "Bruce Springsteen",
+      "releaseYear": 1984,
+      "img": "https://vinyl.bertelsmann.com/de/records/view/L133",
+      "price": 89.99
+    },
+    {
+      "id": 125,
+      "title": "The Dark Side of the Moon",
+      "artist": "Pink Floyd",
+      "releaseYear": 1973,
+      "img": "https://example.com/darkside.jpg",
+      "price": 79.99
+    },
+    {
+      "id": 126,
+      "title": "Abbey Road",
+      "artist": "The Beatles",
+      "releaseYear": 1969,
+      "img": "https://example.com/abbeyroad.jpg",
+      "price": 69.99
+    },
+    {
+      "id": 127,
+      "title": "Thriller",
+      "artist": "Michael Jackson",
+      "releaseYear": 1982,
+      "img": "https://example.com/thriller.jpg",
+      "price": 99.99
+    },
+    {
+      "id": 128,
+      "title": "Rumours",
+      "artist": "Fleetwood Mac",
+      "releaseYear": 1977,
+      "img": "https://example.com/rumours.jpg",
+      "price": 74.99
+    },
+    {
+      "id": 129,
+      "title": "Hotel California",
+      "artist": "Eagles",
+      "releaseYear": 1976,
+      "img": "https://example.com/hotelcalifornia.jpg",
+      "price": 84.99
+    },
+    {
+      "id": 250,
+      "title": "Blood on the Tracks",
+      "artist": "Bob Dylan",
+      "releaseYear": 1975,
+      "img": "https://link-to-vinyl-image.com/image250",
+      "price": 49.99
+    }
+  ]
+}
